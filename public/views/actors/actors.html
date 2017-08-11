@@ -1,0 +1,27 @@
+<a href="#!/addactor">Add Actor</a>
+<table>
+    <thead>
+        <tr>
+            <th>Actor Name</th>
+            <th>DOB</th>
+            <th>Photo</th>
+            <th>Delete</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>        
+        <tr ng-repeat="actor in actors">
+            <td>{{actor.name}}</td>
+            <td>{{actor.dob | date:'d MMMM'}}</td>
+            <td>
+                <img ng-src="api/actor/img/{{actor._id}}" style="width:100px; height:100px">
+            </td>
+            <td>
+                <button ng-click="deleteActor(actor)">Delete</button>
+            </td>
+            <td>
+                <button>Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
