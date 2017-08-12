@@ -9,7 +9,7 @@
             <th>Edit</th>
         </tr>
     </thead>
-    <tbody>        
+    <tbody>
         <tr ng-repeat="actor in actors">
             <td>{{actor.name}}</td>
             <td>{{actor.dob | date:'d MMMM'}}</td>
@@ -20,7 +20,7 @@
                 <button ng-click="deleteActor(actor)">Delete</button>
             </td>
             <td>
-                <button>Edit</button>
+                <button ng-click="editActor(actor)">Edit</button>
             </td>
         </tr>
     </tbody>

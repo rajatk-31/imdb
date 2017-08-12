@@ -1,0 +1,23 @@
+<a href="#!/addmovie">Add Movie</a>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Poster</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="movie in movies">
+            <td>{{movie.name}}</td>
+            <td>{{movie.dob | date:'d MMMM YYYY'}}</td>
+            <td>
+                <img ng-src="api/movie/img/{{movie._id}}" style="width:100px; height:100px">
+            </td>
+            <td>
+                <button ng-click="editMovie(movie)">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
