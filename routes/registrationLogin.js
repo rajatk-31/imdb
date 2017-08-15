@@ -15,7 +15,7 @@ registrationLogin.post('/registration', function(req, res) {
         var userSave = new user({
             email: req.body.email,
             password: req.body.password,
-            name: req.body.name;
+            name: req.body.names
         })
 
         userSave.save(function(err, data) {
@@ -63,6 +63,7 @@ registrationLogin.post('/login', function(req, res) {
                     var token = jwt.sign(user, superSecret.secret, {
                         expiresIn: 86400 // expires in 24 hours
                     });
+
 
                     res.json({
                         success: true,

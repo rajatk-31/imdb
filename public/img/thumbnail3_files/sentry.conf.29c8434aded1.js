@@ -1,0 +1,1 @@
+window.version = "d1dd03f0484314b96eb782a8a39532ba10308bb0";
