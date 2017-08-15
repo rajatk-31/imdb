@@ -1,0 +1,21 @@
+nav h2{
+	display: inline;
+	float: left;
+}
+nav div{
+	display: inline;
+	float: left;
+	margin-left: 20px;
+	margin-right: 500px; 
+}
+nav ul{
+	display:inline;
+	float: right;
+}
+nav ul li{
+	display:inline-block;
+	list-style-type: none;
+	float: left;
+	margin-left: 10px;
+	margin-right: 10px;
+}

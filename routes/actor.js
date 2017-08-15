@@ -25,21 +25,8 @@ app.post('/', upload.single('photo'), function(req, res) {
 
     });
 });
-app.get('/all', function(req, res) {
-    Actor.find({}, function(err, data) {
-        if (err) {
-            res.send({
-                status: false,
-                error: err
-            });
-        } else {
-            res.send({
-                status: true,
-                actors: data
-            });
-        }
-    })
-});
+
+
 app.delete('/:id', function(req, res) {
     Actor.remove({ _id: req.params.id }, function(err, data) {
         if (err) {
