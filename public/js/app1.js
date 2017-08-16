@@ -36,6 +36,9 @@ app.config(function($routeProvider, $locationProvider) {
     }).when('/movies', {
         templateUrl: 'views/movies/movies.html',
         controller: 'MoviesController'
+    }).when('/login', {
+        templateUrl: 'views/UserLogin.html',
+        controller: 'LoginController'
     });
 
 
@@ -43,6 +46,10 @@ app.config(function($routeProvider, $locationProvider) {
     //  redirect: '/'
     // });
     $locationProvider.html5Mode(true);
+});
+
+app.controller('LoginController', function($http, $scope) {
+    console.log("Login Page");
 });
 
 app.controller('ActorsController', function($http, $scope) {
