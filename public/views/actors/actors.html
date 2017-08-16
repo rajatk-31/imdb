@@ -1,27 +1,41 @@
-<a href="#!/addactor">Add Actor</a>
-<table>
-    <thead>
-        <tr>
-            <th>Actor Name</th>
-            <th>DOB</th>
-            <th>Photo</th>
-            <th>Delete</th>
-            <th>Edit</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="actor in actors">
-            <td>{{actor.name}}</td>
-            <td>{{actor.dob | date:'d MMMM'}}</td>
-            <td>
-                <img ng-src="api/actor/img/{{actor._id}}" style="width:100px; height:100px">
-            </td>
-            <td>
-                <button ng-click="deleteActor(actor)">Delete</button>
-            </td>
-            <td>
-                <button ng-click="editActor(actor)">Edit</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div>
+    <style>
+    table {
+        margin-top: 100px;
+    }
+
+    button {
+        margin-bottom: 100px;
+    }
+    </style>
+    <div>
+      <button type="button">  <a href="/addactor">Add Actor</a> </button>
+    </div>
+    <table class="table table-inverse table-striped ">
+        <thead>
+            <tr>
+                <th>Actor Name</th>
+                <th>DOB</th>
+                <th>Photo</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="actor in actors">
+                <th scope="row">{{actor.name}}</th>
+                <td>{{actor.dob | date:'d MMMM'}}</td>
+                <td><img ng-src="api/actor/img/{{actor._id}}" style="width:100px; height:100px"></td>
+                <td>
+                    <button ng-click="deleteActor(actor)">Delete</button>
+                </td>
+                <td>
+                    <button ng-click="editActor(actor)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+      <button type="button">  <a href="/addactor">Add Actor</a> </button>
+    </div>
+</div>

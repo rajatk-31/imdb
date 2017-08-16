@@ -4,6 +4,22 @@ var upload = multer({
     dest: 'images/actors/'
 });
 var Actor = require('../model/actor');
+
+app.get ('/all', function (req,res) {
+    Actor.find({}, function(err, data){
+        if (err) {
+            res.send ({
+                status: false,
+                error: err
+            });
+        } else {
+            res.send ({
+                status: true,
+                actors: data
+            });
+        }
+    })
+})
 app.post('/', upload.single('photo'), function(req, res) {
     var actor = new Actor({
         name: req.body.name,

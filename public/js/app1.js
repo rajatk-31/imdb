@@ -5,23 +5,8 @@ app.run(function($rootScope) {
 
 });
 
-app.config(function($routeProvider) {
-    $routeProvider.when('/', {
-        template: '<h1>Hello</h1>'
-    }).when('/actors', {
-        templateUrl: 'views/actors/actors.html',
-        controller: 'ActorsController'
-    }).when('/addactor', {
-        templateUrl: 'views/actors/actor-form.html',
-        controller: 'ActorFormController'
-    }).when('/editactor', {
-        templateUrl: 'views/actors/actor-form.html',
-        controller: 'ActorEditController'
-    }).when('/addmovie', {
-        templateUrl: 'views/movies/movie-form.html',
-        controller: 'MovieFormController'
-    });
-    $routeProvider.when("/home", {
+app.config(function($routeProvider, $locationProvider) {
+     $routeProvider.when("/", {
         templateUrl: "views/pagelayout.html",
         controller: "actrl"
     });
@@ -36,7 +21,20 @@ app.config(function($routeProvider) {
     $routeProvider.when("/otherInformation", {
         templateUrl: "views/otherInf.html",
         controller: "cctrl"
+    }).when('/actors', {
+        templateUrl: 'views/actors/actors.html',
+        controller: 'ActorsController'
+    }).when('/addactor', {
+        templateUrl: 'views/actors/actor-form.html',
+        controller: 'ActorFormController'
+    }).when('/editactor', {
+        templateUrl: 'views/actors/actor-form.html',
+        controller: 'ActorEditController'
+    }).when('/addmovie', {
+        templateUrl: 'views/movies/movie-form.html',
+        controller: 'MovieFormController'
     });
+   
 
     // otherwise({
     //  redirect: '/'
@@ -133,9 +131,6 @@ app.controller("actrl", function($scope) {
 });
 app.controller("bctrl", function($scope, $http) {
     alert("second page called");
-    $scope.submitForm = function() {
-
-    }
 
 });
 
