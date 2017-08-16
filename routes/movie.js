@@ -40,10 +40,35 @@ app.get('/all', function(req, res) {
         } else {
             res.send({
                 status: true,
-                actors: data
+                movies: data
             });
         }
     })
 });
+app.delete('/:id', function(req, res) {
+    Movie.remove({ _id: req.params.id }, function(err, data) {
+        if (err) {
+            res.send({
+                status: false,
+                error: err
+            });
+        } else {
+            res.send({
+                status: true,
+                movies: data
+            });
+        }
+    });
+});
+app.get('/img/:id', function(req, res) {
+    Movie.findOne({ _id: req.params.id }, function(err, data) {
+        if (data && data.poster) {
+            res.header('content-type', data.poster && data.poster.mimetype);
+            res.sendFile(global.rootPath + '/' + data.poster.path);
+        } else {
+            res.send(err);
+        }
+    })
+})
 
 module.exports = app;

@@ -6,7 +6,7 @@ app.run(function($rootScope) {
 });
 
 app.config(function($routeProvider, $locationProvider) {
-     $routeProvider.when("/", {
+    $routeProvider.when("/", {
         templateUrl: "views/pagelayout.html",
         controller: "actrl"
     });
@@ -33,8 +33,11 @@ app.config(function($routeProvider, $locationProvider) {
     }).when('/addmovie', {
         templateUrl: 'views/movies/movie-form.html',
         controller: 'MovieFormController'
+    }).when('/movies', {
+        templateUrl: 'views/movies/movies.html',
+        controller: 'MoviesController'
     });
-   
+
 
     // otherwise({
     //  redirect: '/'
@@ -72,6 +75,38 @@ app.controller('ActorsController', function($http, $scope) {
     }
 
 });
+
+app.controller('MoviesController', function($http, $scope) {
+    $scope.refresh = function() {
+        $http({
+            url: 'api/movie/all'
+        }).then(function(response) {
+            $scope.movies = response.data.movies;
+        }, function(response) {
+
+        });
+    }
+    $scope.refresh();
+    $scope.deleteMovie = function(movie) {
+        if (confirm('Are you sure!')) {
+            $http({
+                url: 'api/movie/' + movie._id,
+                method: 'DELETE'
+            }).then(function(response) {
+                $scope.refresh();
+                alert('Successfully deleted movie');
+
+
+            }, function(response) {
+                alert('Something went wrong');
+                console.log(response)
+            });
+        }
+
+    }
+
+});
+
 
 app.controller('ActorFormController', function($http, $scope, $location) {
     $scope.submitForm = function() {
