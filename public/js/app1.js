@@ -36,6 +36,9 @@ app.config(function($routeProvider, $locationProvider) {
     }).when('/movies', {
         templateUrl: 'views/movies/movies.html',
         controller: 'MoviesController'
+    }).when('/login', {
+        templateUrl: 'views/UserLogin.html',
+        controller: 'LoginController'
     });
 
 
@@ -45,7 +48,15 @@ app.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
+<<<<<<< HEAD
 app.controller('ActorsController', function($http, $scope, $rootScope) {
+=======
+app.controller('LoginController', function($http, $scope) {
+    console.log("Login Page");
+});
+
+app.controller('ActorsController', function($http, $scope) {
+>>>>>>> afa4f852d5175b4eed791bac2b3759b17e111fd5
     $scope.refresh = function() {
         $http({
             url: 'api/actor/all'

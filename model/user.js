@@ -13,5 +13,9 @@ module.exports = mongoose.model('User', new Schema({
     },
     name: {
         type: String
+    },
+    total_awards: {
+        type: Number
     }
+    /*movies: []*/
 }));
