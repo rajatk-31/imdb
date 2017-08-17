@@ -45,12 +45,13 @@ app.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
-app.controller('ActorsController', function($http, $scope) {
+app.controller('ActorsController', function($http, $scope, $rootScope) {
     $scope.refresh = function() {
         $http({
             url: 'api/actor/all'
         }).then(function(response) {
             $scope.actors = response.data.actors;
+            console.log ($rootScope.actors)
         }, function(response) {
 
         });
@@ -185,8 +186,20 @@ app.controller("formController", function($scope) {
 
 })
 
-app.controller('MovieFormController', function($http, $scope, $location) {
+app.controller('MovieFormController', function($http, $scope, $location, $rootScope) {
+    $scope.refresh = function() {
+        $http({
+            url: 'api/actor/all'
+        }).then(function(response) {
+            $scope.actors = response.data.actors;
+            console.log ($scope.actors)
+        }, function(response) {
+
+        });
+    }
+    $scope.refresh ()
     $scope.submitMovieForm = function() {
+        console.log($scope.actor_id)
         var form = new FormData();
         form.append('poster', $scope.movie.poster);
         form.append('title', $scope.movie.title);
@@ -194,6 +207,10 @@ app.controller('MovieFormController', function($http, $scope, $location) {
         form.append('director', $scope.movie.director);
         form.append('runtime', $scope.movie.runtime);
         form.append('plot', $scope.movie.plot);
+        $scope.actor_id.forEach(function(actor){
+            form.append('actors', actor);
+        })
+        
         $http({
             url: 'api/movie',
             method: 'POST',
@@ -202,7 +219,9 @@ app.controller('MovieFormController', function($http, $scope, $location) {
                 'content-type': undefined
             }
         }).then(function(response) {
+            console.log (response.data);
             if (response.data.status) {
+                
                 alert('Successfully added movie');
                 $location.path('/movies');
             } else {

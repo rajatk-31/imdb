@@ -17,6 +17,11 @@ var Movie = new Schema({
     plot: {
         type: String
     },
+    
+    actors: [Schema.Types.ObjectId]
+    
+           
+    
     /* writers: [],
      genre: []*/
 });

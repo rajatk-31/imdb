@@ -13,7 +13,8 @@ app.post('/', upload.single('poster'), function(req, res) {
         poster: req.file,
         director: req.body.director,
         runtime: req.body.runtime,
-        plot: req.body.plot
+        plot: req.body.plot,
+        actors: req.body.actors
     });
     movie.save(function(err, data) {
         if (err) {
