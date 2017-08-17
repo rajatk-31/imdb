@@ -4,6 +4,7 @@ var upload = multer({
     dest: 'images/actors/'
 });
 var Actor = require('../model/actor');
+var Movie = require('../model/movie');
 
 app.get ('/all', function (req,res) {
     Actor.find({}, function(err, data){
@@ -87,6 +88,23 @@ app.get('/img/:id', function(req, res) {
         } else {
             res.send(err);
         }
+    });
+});
+
+app.get('/actor/:id', function(req, res){
+    Movie.find({actors: req.params.id}, function(err, data){
+       if (err) {
+            res.send ({
+                status: false,
+                error: err
+            });
+        } else {
+            res.send ({
+                status: true,
+                actors: data
+            });
+        }
     })
 })
+
 module.exports = app;
