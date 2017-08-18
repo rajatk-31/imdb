@@ -6,15 +6,15 @@ var upload = multer({
 var Actor = require('../model/actor');
 var Movie = require('../model/movie');
 
-app.get ('/all', function (req,res) {
-    Actor.find({}, function(err, data){
+app.get('/all', function(req, res) {
+    Actor.find({}, function(err, data) {
         if (err) {
-            res.send ({
+            res.send({
                 status: false,
                 error: err
             });
         } else {
-            res.send ({
+            res.send({
                 status: true,
                 actors: data
             });
@@ -102,20 +102,35 @@ app.get('/image/:id', function(req, res) {
     });
 });
 
-app.get('/actor/:id', function(req, res){
-    Movie.find({actors: req.params.id}, function(err, data){
-       if (err) {
-            res.send ({
+app.get('/actor/:id', function(req, res) {
+    Movie.find({ actors: req.params.id }, function(err, data) {
+        if (err) {
+            res.send({
                 status: false,
                 error: err
             });
         } else {
-            res.send ({
+            res.send({
                 status: true,
                 actors: data
             });
         }
     })
 })
+app.get('/:id', function(req, res){
+    Actor.findOne({_id: req.params.id}, function(err, data){
+        if(err){
+            res.send({
+                status: false,
+                error: err
+            });
+        } else {
+            res.send({
+                status: true,
+                actors: data
+            });
+        }
+    })
+});
 
 module.exports = app;

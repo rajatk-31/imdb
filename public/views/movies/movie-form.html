@@ -1,15 +1,26 @@
 <div>
     <style>
-        form {
-            margin-top: 100px;
-        }
+    form {
+        margin-top: 100px;
+    }
     </style>
     <form ng-submit="submitMovieForm()">
-        Title <input type="text" ng-model="movie.title"><br /> Release Date <input type="date" ng-model="movie.release_date"><br /> Director <input type="text" ng-model="movie.director"><br /> Plot <input type="text" ng-model="movie.plot"><br /> Runtime
-        <input type="text" ng-model="movie.runtime"><br /> Poster <input type="file" file-model="movie.poster" accept=".jpg, .png, .jpeg"><br />
+        Title
+        <input type="text" ng-model="movie.title">
+        <br /> Release Date
+        <input type="date" ng-model="movie.release_date">
+        <br /> Director
+        <input type="text" ng-model="movie.director">
+        <br /> Plot
+        <input type="text" ng-model="movie.plot">
+        <br /> Runtime
+        <input type="text" ng-model="movie.runtime">
+        <br /> Poster
+        <input type="file" file-model="movie.poster" accept=".jpg, .png, .jpeg">
+        <br />
         <button>Submit</button>
-         Actors: <select ng-model="actor_id" ng-options="actor._id as actor.name for actor in actors" multiple></select>
-         <pre ng-repeat = "actorid in actor_id">ActorId: {{actorid}}</pre>
-
+        Actors:
+        <select ng-model="actor_id" ng-options="actor._id as actor.name for actor in actors" multiple></select>
+        <pre ng-repeat="actorid in actor_id">ActorId: {{actorid}}</pre>
     </form>
 </div>

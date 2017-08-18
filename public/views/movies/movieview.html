@@ -1,0 +1,37 @@
+<div>
+    <style>
+    #final {
+        margin-top: 300px;
+    }
+    </style>
+    <div id="final">
+        <img ng-src="api/movie/img/{{mov.actors._id}}" style="width:200px; height:250px" alt="{{mov.actors.name}}">
+        <h1>{{mov.actors.title}}</h1>
+        <p>{{mov.actors.release_date | date : "dd MMMM yyyy" }}</p>
+        <p>{{mov.actors.runtime}}</p>
+        <p>{{mov.actors.plot}}</p>
+        <table class="table table-inverse table-striped ">
+            <thead>
+                <tr>
+                  
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Photo</th>
+                    <th>View Actor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="actor in act">
+                    <th scope="row">{{actor.actors.name}}</th>
+                    <td>{{actor.actors.dob | date:'d MMMM yyyy'}}</td>
+                    <td>
+                        <img ng-src="api/actor/img/{{actor.actors._id}}" style="width:100px; height:100px">
+                    </td>
+                    <td>
+                        <button ng-click="view(actor.actors._id)">View</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

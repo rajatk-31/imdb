@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="icon" href="data:,">
-
     <!-- <link href="resume.css" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -31,11 +30,17 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">IMDB</a>
-                <div class="form">
+                <form  class="form-group">
+                    <label for="actor">Search</label>
+                    <select name="actor" id="states" type="text" placeholder="enter actor name" ng-model="actor" ng-options="actor._id as actor.name for actor in actors" class="form-control"> </select>
+                    <button class="btn btn-success" type="submit" ng-click = 'getActor(actor)'> Submit</button>
+                </form>
+                
+                <!--<div class="form">
                     <input type="text" placeholder="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </div>
-                <!--<div class="f">
+                <div class="f">
                 <input type="text" placeholder="search"><button>search</button>
                 </div> -->
                 <div class="navbar-collapse collapse">
@@ -82,12 +87,8 @@
     <script src="js/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
-
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-
-
-
     <script src="js/app1.js"></script>
 </body>
 

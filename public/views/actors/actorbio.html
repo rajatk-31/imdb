@@ -1,0 +1,37 @@
+<div>
+<style>
+	#final{
+		margin-top: 300px;
+	}
+</style>
+	<div id="final">
+		<img ng-src="api/actor/img/{{actor._id}}" style="width:200px; height:250px" alt="{{actor.actors.name}}">
+		<h1>{{actor.actors.name}}</h1>
+		<p>{{actor.actors.dob | date : "dd MMMM yyyy" }}</p>
+		  <table class="table table-inverse table-striped ">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Poster</th>
+                <th>View Movie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="movie in movies">
+                <th scope="row">{{movie.title}}</th>
+                <td>{{movie.release_date | date:'d MMMM yyyy'}}</td>
+                <td>
+                    <img ng-src="api/movie/img/{{movie._id}}" style="width:100px; height:100px">
+                </td>
+                <td>
+                    <button ng-click="view(movie)">View</button>
+                </td>
+                
+            </tr>
+        </tbody>
+
+    </table>
+	</div>
+
+</div>

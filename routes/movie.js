@@ -71,5 +71,21 @@ app.get('/img/:id', function(req, res) {
         }
     })
 })
+app.get('/:id', function(req, res){
+    Movie.findOne({_id: req.params.id}, function(err, data){
+        if(err){
+            res.send({
+                status: false,
+                error: err
+            });
+        } else {
+            res.send({
+                status: true,
+                actors: data
+            });
+        }
+    })
+});
+
 
 module.exports = app;

@@ -1,7 +1,52 @@
 const app = angular.module('imdbapp', ['ngRoute', 'ngMessages']);
 
-app.run(function($rootScope) {
+app.run(function($rootScope, $http, $routeParams, $location) {
     alert("we are the champion")
+    $rootScope.refresh = function() {
+        $http({
+            url: 'api/actor/all'
+        }).then(function(response) {
+            $rootScope.actors = response.data.actors;
+            console.log($rootScope.actors)
+        }, function(response) {
+
+        });
+    }
+    $rootScope.refresh();
+    $rootScope.getActor = function(id) {
+        $http({
+            url: 'api/actor/' + id,
+            method: 'GET'
+        }).then(function(response) {
+            $rootScope.actor = response.data;
+            $rootScope.actor._id = response.data.actors._id;
+            $rootScope.getmovie = function() {
+                $http({
+                    url: 'api/actor/actor/' + $rootScope.actor._id,
+                    method: 'GET'
+                }).then(function(response) {
+                    $rootScope.movies = response.data.actors;
+                    console.log($rootScope.movies)
+                }, function(response) {
+                    alert("Something Went wrong");
+                });
+            }
+
+            $rootScope.getmovie()
+
+
+            console.log($rootScope.actor)
+        }, function(response) {
+            alert("Something Went wrong");
+        });
+
+
+            $location.path('/actorbio');
+    }
+
+    // $rootScope.getActor = function (_id) {
+
+    // }
 
 });
 
@@ -39,6 +84,12 @@ app.config(function($routeProvider, $locationProvider) {
     }).when('/login', {
         templateUrl: 'views/UserLogin.html',
         controller: 'LoginController'
+    }).when('/actorbio', {
+        templateUrl: 'views/actors/actorbio.html',
+        controller: 'actorBioController'
+    }).when('/moviedetails', {
+        templateUrl: 'views/movies/movieview.html',
+        controller: 'moviedetailcontroller'
     });
 
 
@@ -53,13 +104,20 @@ app.controller('LoginController', function($http, $scope) {
     console.log("Login Page");
 });
 
+app.controller('moviedetailcontroller', function($http, $scope, $location, $rootScope) {
+    console.log("movie detail page");
+    $scope.view=function(id){
+        $rootScope.getActor(id);
+    }
+});
+
 app.controller('ActorsController', function($http, $scope) {
     $scope.refresh = function() {
         $http({
             url: 'api/actor/all'
         }).then(function(response) {
             $scope.actors = response.data.actors;
-            console.log ($rootScope.actors)
+            console.log($rootScope.actors)
         }, function(response) {
 
         });
@@ -192,7 +250,54 @@ app.controller("formController", function($scope) {
         console.log($scope.contact);
     }
 
-})
+});
+
+app.controller("actorBioController", function($http, $scope, $location, $rootScope, $routeParams) {
+    alert("actor bio page called");
+    $scope.view=function(movie){
+        $rootScope.act=[];
+        $http({
+            url: 'api/movie/'+movie._id
+        }).then(function(response){
+            $rootScope.mov = response.data;
+            console.log($rootScope.mov)
+        },function(response){
+            console.log("error")
+        });
+        movie.actors.forEach(function(id){
+        $http({
+            url: 'api/actor/'+id
+        }).then(function(response){
+            $rootScope.act.push(response.data);
+            console.log($rootScope.act)
+        },function(response){
+            console.log("error")
+        })
+    })
+        $location.path('/moviedetails');
+    }
+    
+    // $rootScope.getActor = function(id) {
+    //     $http({
+    //         url: 'api/actor/' + id,
+    //         method: 'GET'
+    //     }).then(function(response) {
+    //         $scope.actors = response.data.actors;
+    //         console.log($rootScope.actors)
+    //     }, function(response) {
+    //         alert("Something Went wrong");
+    //     });
+    //     $http({
+    //         url: 'api/actor/actor/' + id,
+    //         method: 'GET'
+    //     }).then(function(response) {
+    //         $scope.actors.movie = response.data.actors;
+    //         console.log($rootScope.actors)
+    //     }, function(response) {
+    //         alert("Something Went wrong");
+    //     });
+    // }
+});
 
 app.controller('MovieFormController', function($http, $scope, $location, $rootScope) {
     $scope.refresh = function() {
@@ -200,12 +305,12 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
             url: 'api/actor/all'
         }).then(function(response) {
             $scope.actors = response.data.actors;
-            console.log ($scope.actors)
+            console.log($scope.actors)
         }, function(response) {
 
         });
     }
-    $scope.refresh ()
+    $scope.refresh()
     $scope.submitMovieForm = function() {
         console.log($scope.actor_id)
         var form = new FormData();
@@ -215,10 +320,10 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
         form.append('director', $scope.movie.director);
         form.append('runtime', $scope.movie.runtime);
         form.append('plot', $scope.movie.plot);
-        $scope.actor_id.forEach(function(actor){
+        $scope.actor_id.forEach(function(actor) {
             form.append('actors', actor);
         })
-        
+
         $http({
             url: 'api/movie',
             method: 'POST',
@@ -227,9 +332,9 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
                 'content-type': undefined
             }
         }).then(function(response) {
-            console.log (response.data);
+            console.log(response.data);
             if (response.data.status) {
-                
+
                 alert('Successfully added movie');
                 $location.path('/movies');
             } else {
