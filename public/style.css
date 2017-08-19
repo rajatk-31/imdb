@@ -8,5 +8,26 @@
 	margin-top: 10px;
 	margin-left: 30px;
 }
-
-
+#polk{
+	display: inline;
+	float: left;
+	width: 200px;
+}
+#polk button {
+	display: inline;
+	float: left;
+}
+#navigationright  {
+	display: inline;
+	float: right;
+}
+#go{
+	display: inline;
+	float: right;
+}
+#po{
+	height: 0px;
+}
+#navfirst{
+	margin-top: 2px;
+}

@@ -21,21 +21,27 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="navfirst">
+            <div class="container" id="po">
+            <span class="row">
+              
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only"> Toggle navigation </span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">IMDB</a>
-                <form  class="form-group">
-                    <label for="actor">Search</label>
-                    <select name="actor" id="states" type="text" placeholder="enter actor name" ng-model="actor" ng-options="actor._id as actor.name for actor in actors" class="form-control"> </select>
-                    <button class="btn btn-success" type="submit" ng-click = 'getActor(actor)'> Submit</button>
-                </form>
                 
+                <span class="col-xs-1">
+                <a class="navbar-brand" href="/">IMDB</a>
+                </span>
+                <span class="col-xs-4" id="polk">
+                    <select name="actor" id="states" type="text" placeholder="enter actor name" ng-model="actor" ng-options="actor._id as actor.name for actor in actors" class="form-control"> </select>
+               
+                </span>
+                <span class="col-xs-1">
+                <button class="btn btn-success" type="submit" ng-click = 'getActor(actor)'> Submit</button>
+                </span>
                 <!--<div class="form">
                     <input type="text" placeholder="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -43,7 +49,8 @@
                 <div class="f">
                 <input type="text" placeholder="search"><button>search</button>
                 </div> -->
-                <div class="navbar-collapse collapse">
+                <span>
+                <div class="navbar-collapse collapse" id="go">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"> <a href="/registration">SIGN UP</a></li>
                         <li class="active"><a href="/login">Login</a></li>
@@ -60,8 +67,10 @@
                             </ul>
                         </li>
                     </ul>
+                    </div>
+                </span>
                 </div>
-            </div>
+            </span>
         </nav>
     </header>
     <section ng-view>
