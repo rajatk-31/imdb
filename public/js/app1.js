@@ -41,12 +41,37 @@ app.run(function($rootScope, $http, $routeParams, $location) {
         });
 
 
-            $location.path('/actorbio');
+        $location.path('/actorbio');
+        $rootscope.flag = 1;
     }
 
-    // $rootScope.getActor = function (_id) {
+    $rootScope.getMovie = function(id) {
+        $rootScope.act = [];
+        $http({
+            url: 'api/movie/' + id
+        }).then(function(response) {
+            $rootScope.mov = response.data;
+            console.log($rootScope.mov)
+        }, function(response) {
+            console.log("error")
+        });
+        setTimeout(function() {
+            $rootScope.mov.actors.actors.forEach(function(id) {
+                $http({
+                    url: 'api/actor/' + id
+                }).then(function(response) {
+                    $rootScope.act.push(response.data);
+                    console.log($rootScope.act)
+                }, function(response) {
+                    console.log("error")
+                })
+            })
+            $location.path('/moviedetails');
+        }, 10);
+    }
 
-    // }
+   
+
 
 });
 
@@ -106,18 +131,18 @@ app.controller('LoginController', function($http, $scope) {
 
 app.controller('moviedetailcontroller', function($http, $scope, $location, $rootScope) {
     console.log("movie detail page");
-    $scope.view=function(id){
+    $scope.view = function(id) {
         $rootScope.getActor(id);
     }
 });
 
-app.controller('ActorsController', function($http, $scope) {
+app.controller('ActorsController', function($http, $scope, $rootScope, $location) {
     $scope.refresh = function() {
         $http({
             url: 'api/actor/all'
         }).then(function(response) {
             $scope.actors = response.data.actors;
-            console.log($rootScope.actors)
+            console.log($scope.actors)
         }, function(response) {
 
         });
@@ -140,6 +165,16 @@ app.controller('ActorsController', function($http, $scope) {
         }
 
     }
+     $scope.editActor = function(actor) {
+        $rootScope.flag=2;
+        $rootScope.aid=actor._id;
+
+        $rootScope.a = actor;
+        console.log ($rootScope.aid);
+        console.log($rootScope.a)
+        $location.path('/addactor');
+        
+        }     
 
 });
 
@@ -175,11 +210,14 @@ app.controller('MoviesController', function($http, $scope) {
 });
 
 
-app.controller('ActorFormController', function($http, $scope, $location) {
+app.controller('ActorFormController', function($http, $scope, $location, $rootScope) {
+
+    
     $scope.submitForm = function() {
         var form = new FormData();
         form.append('photo', $scope.actor.photo);
         form.append('name', $scope.actor.name);
+        form.append('bio', $scope.actor.bio);
         form.append('dob', $scope.actor.dob);
         $http({
             url: 'api/actor',
@@ -200,15 +238,18 @@ app.controller('ActorFormController', function($http, $scope, $location) {
             console.log(response)
         })
     }
-});
-app.controller('ActorEditController', function($http, $scope, $location) {
-    $scope.editActor = function(actor) {
-        $scope.actor = actor;
+
+
+
+    $scope.submit = function() {
+        $scope.actor=$rootScope.a;
+        var form = new FormData();
         form.append('photo', $scope.actor.photo);
         form.append('name', $scope.actor.name);
         form.append('dob', $scope.actor.dob);
+        form.append('bio', $scope.actor.bio);
         $http({
-            url: 'api/actor/:id',
+            url: 'api/actor/edit/'+$rootScope.aid,
             method: 'POST',
             data: form,
             headers: {
@@ -217,6 +258,7 @@ app.controller('ActorEditController', function($http, $scope, $location) {
         }).then(function(response) {
             if (response.data.status) {
                 alert('Successfully Updated Actor');
+                console.log(response);
                 $location.path('/actors');
             } else {
                 alert('Something went wrong');
@@ -224,9 +266,22 @@ app.controller('ActorEditController', function($http, $scope, $location) {
         }, function(response) {
             alert('Something went wrong');
             console.log(response)
-        })
+        });
+         $rootScope.flag=1;
     }
+   
+
+
 });
+
+app.controller('ActorEditController', function($http, $scope, $location) {
+   
+});
+
+
+
+
+
 app.controller("actrl", function($scope) {
     alert("first page called");
 
@@ -254,29 +309,29 @@ app.controller("formController", function($scope) {
 
 app.controller("actorBioController", function($http, $scope, $location, $rootScope, $routeParams) {
     alert("actor bio page called");
-    $scope.view=function(movie){
-        $rootScope.act=[];
+    $scope.view = function(movie) {
+        $rootScope.act = [];
         $http({
-            url: 'api/movie/'+movie._id
-        }).then(function(response){
+            url: 'api/movie/' + movie._id
+        }).then(function(response) {
             $rootScope.mov = response.data;
             console.log($rootScope.mov)
-        },function(response){
+        }, function(response) {
             console.log("error")
         });
-        movie.actors.forEach(function(id){
-        $http({
-            url: 'api/actor/'+id
-        }).then(function(response){
-            $rootScope.act.push(response.data);
-            console.log($rootScope.act)
-        },function(response){
-            console.log("error")
+        movie.actors.forEach(function(id) {
+            $http({
+                url: 'api/actor/' + id
+            }).then(function(response) {
+                $rootScope.act.push(response.data);
+                console.log($rootScope.act)
+            }, function(response) {
+                console.log("error")
+            })
         })
-    })
         $location.path('/moviedetails');
     }
-    
+
     // $rootScope.getActor = function(id) {
     //     $http({
     //         url: 'api/actor/' + id,

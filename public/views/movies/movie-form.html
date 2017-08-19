@@ -1,10 +1,10 @@
 <div>
     <style>
-    form {
-        margin-top: 100px;
+    #movie {
+        margin-top: 300px;
     }
     </style>
-    <form ng-submit="submitMovieForm()">
+    <form id="movie" ng-submit="submitMovieForm()">
         Title
         <input type="text" ng-model="movie.title">
         <br /> Release Date

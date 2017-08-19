@@ -8,6 +8,8 @@
 		<img ng-src="api/actor/img/{{actor._id}}" style="width:200px; height:250px" alt="{{actor.actors.name}}">
 		<h1>{{actor.actors.name}}</h1>
 		<p>{{actor.actors.dob | date : "dd MMMM yyyy" }}</p>
+        <h3>BIO</h3>
+        <p>{{actor.actors.bio}}</p>
 		  <table class="table table-inverse table-striped ">
         <thead>
             <tr>

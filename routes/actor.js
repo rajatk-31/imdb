@@ -25,6 +25,7 @@ app.post('/', upload.single('photo'), function(req, res) {
     var actor = new Actor({
         name: req.body.name,
         dob: req.body.dob,
+        bio: req.body.bio,
         photo: req.file
     });
     actor.save(function(err, data) {
@@ -59,13 +60,22 @@ app.delete('/:id', function(req, res) {
         }
     });
 })
-app.post('/:id', function(req, res) {
-    var actor2 = {
-        name: req.body.name,
-        dob: req.body.dob,
-        photo: req.file
+app.post('/edit', function(req, res) {
+    if (!req.body._id || !req.body.name) {
+
+        res.json({
+            sucess: false,
+            msg: "data not provided"
+        })
+    } else {
+        var _id = req.body._id;
+        var actor = {
+        'name': req.body.name,
+        'dob': req.body.dob,
+        'photo': req.file,
+        'bio' : req.body.bio
     };
-    Actor.findOneAndUpdate({ _id: rq.params.id }, { $set: actor2 }, { new: true }, function(err, doc) {
+    Actor.findOneAndUpdate({ _id:_id }, {$set: actor}, { new: true }, function(err, data) {
         if (err) {
             res.send({
                 status: false,
@@ -79,6 +89,9 @@ app.post('/:id', function(req, res) {
         }
 
     });
+        
+    }
+    
 });
 app.get('/img/:id', function(req, res) {
     Actor.findOne({ _id: req.params.id }, function(err, data) {
