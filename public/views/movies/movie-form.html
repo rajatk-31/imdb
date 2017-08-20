@@ -4,7 +4,7 @@
         margin-top: 300px;
     }
     </style>
-    <form id="movie" ng-submit="submitMovieForm()">
+    <form id="movie" ng-submit="v = (flag === 1) ? submitMovieForm() : submitmovie()">
         Title
         <input type="text" ng-model="movie.title">
         <br /> Release Date

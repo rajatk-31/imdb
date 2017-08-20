@@ -60,22 +60,18 @@ app.delete('/:id', function(req, res) {
         }
     });
 })
-app.post('/edit', function(req, res) {
-    if (!req.body._id || !req.body.name) {
 
-        res.json({
-            sucess: false,
-            msg: "data not provided"
-        })
-    } else {
-        var _id = req.body._id;
+app.post('/edit/:id', upload.single('photo'), function(req, res) {
+    
+        //var _id = req.body._id;
         var actor = {
-        'name': req.body.name,
-        'dob': req.body.dob,
-        'photo': req.file,
-        'bio' : req.body.bio
+        name: req.body.name,
+        dob: req.body.dob,
+        bio: req.body.bio,
+        photo: req.file
     };
-    Actor.findOneAndUpdate({ _id:_id }, {$set: actor}, { new: true }, function(err, data) {
+    
+    Actor.findOneAndUpdate({_id : req.params.id }, {$set: actor}, { new: true }, function(err, data) {
         if (err) {
             res.send({
                 status: false,
@@ -84,14 +80,14 @@ app.post('/edit', function(req, res) {
         } else {
             res.send({
                 status: true,
-                data: data
+                data: data,
+                msg: "updated"
             });
         }
 
     });
+     
         
-    }
-    
 });
 app.get('/img/:id', function(req, res) {
     Actor.findOne({ _id: req.params.id }, function(err, data) {

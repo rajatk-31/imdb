@@ -42,7 +42,7 @@ app.run(function($rootScope, $http, $routeParams, $location) {
 
 
         $location.path('/actorbio');
-        $rootscope.flag = 1;
+        $rootScope.flag = 1;
     }
 
     $rootScope.getMovie = function(id) {
@@ -178,7 +178,7 @@ app.controller('ActorsController', function($http, $scope, $rootScope, $location
 
 });
 
-app.controller('MoviesController', function($http, $scope) {
+app.controller('MoviesController', function($http, $scope, $rootScope, $location) {
     $scope.refresh = function() {
         $http({
             url: 'api/movie/all'
@@ -206,8 +206,18 @@ app.controller('MoviesController', function($http, $scope) {
         }
 
     }
+        $scope.editMovie = function(movie) {
+        $rootScope.flag=2;
+        $rootScope.mid=movie._id;
+
+        $rootScope.m = movie;
+        console.log ($rootScope.mid);
+        console.log($rootScope.m)
+        $location.path('/addmovie');
+        }
 
 });
+
 
 
 app.controller('ActorFormController', function($http, $scope, $location, $rootScope) {
@@ -239,10 +249,11 @@ app.controller('ActorFormController', function($http, $scope, $location, $rootSc
         })
     }
 
-
+    $scope.actor=$rootScope.a;
 
     $scope.submit = function() {
-        $scope.actor=$rootScope.a;
+        
+        console.log ($scope.actor);
         var form = new FormData();
         form.append('photo', $scope.actor.photo);
         form.append('name', $scope.actor.name);
@@ -261,10 +272,10 @@ app.controller('ActorFormController', function($http, $scope, $location, $rootSc
                 console.log(response);
                 $location.path('/actors');
             } else {
-                alert('Something went wrong');
+                alert('Something went wrong here');
             }
         }, function(response) {
-            alert('Something went wrong');
+            alert('Something went wrong 2here');
             console.log(response)
         });
          $rootScope.flag=1;
@@ -400,6 +411,45 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
             console.log(response)
         })
     }
+
+      $scope.movie=$rootScope.m;
+
+    $scope.submitmovie = function() {
+        
+        console.log ($scope.movie);
+        var form = new FormData();
+        form.append('poster', $scope.movie.poster);
+        form.append('title', $scope.movie.title);
+        form.append('release_date', $scope.movie.release_date);
+        form.append('director', $scope.movie.director);
+        form.append('runtime', $scope.movie.runtime);
+        form.append('plot', $scope.movie.plot);
+        $scope.actor_id.forEach(function(actor) {
+            form.append('actors', actor);
+        })
+        $http({
+            url: 'api/movie/edit/'+$rootScope.mid,
+            method: 'POST',
+            data: form,
+            headers: {
+                'content-type': undefined
+            }
+        }).then(function(response) {
+            if (response.data.status) {
+                alert('Successfully Updated Actor');
+                console.log(response);
+                $location.path('/movies');
+            } else {
+                alert('Something went wrong here');
+            }
+        }, function(response) {
+            alert('Something went wrong 2here');
+            console.log(response)
+        });
+         $rootScope.flag=1;
+    }
+   
+
 
 });
 

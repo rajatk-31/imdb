@@ -87,5 +87,43 @@ app.get('/:id', function(req, res){
     })
 });
 
+app.post('/edit/:id', upload.single('poster'), function(req, res) {
+    if(!req.body.title)
+    {
+        res.send({
+            msg:"ghdhgfsjsh"
+        })
+        console.log("something hurrrrrrrrr")
+    }
+       else{ //var _id = req.body._id;
+        var movie = {
+        title: req.body.title,
+        release_date: req.body.release_date,
+        poster: req.file,
+        director: req.body.director,
+        runtime: req.body.runtime,
+        plot: req.body.plot,
+        actors: req.body.actors
+    }
+    
+    Movie.findOneAndUpdate({_id : req.params.id }, {$set: movie}, { new: true }, function(err, data) {
+        if (err) {
+            res.send({
+                status: false,
+                error: err
+            });
+        } else {
+            res.send({
+                status: true,
+                data: data,
+                msg: "updated"
+            });
+        }
+
+    });
+     }
+        
+});
+
 
 module.exports = app;
