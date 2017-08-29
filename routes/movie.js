@@ -63,7 +63,7 @@ app.delete('/:id', function(req, res) {
 });
 app.get('/img/:id', function(req, res) {
     Movie.findOne({ _id: req.params.id }, function(err, data) {
-        if (data && data.poster) {
+        if (data && data.poster) { 
             res.header('content-type', data.poster && data.poster.mimetype);
             res.sendFile(global.rootPath + '/' + data.poster.path);
         } else {

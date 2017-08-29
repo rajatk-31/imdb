@@ -70,7 +70,7 @@ app.run(function($rootScope, $http, $routeParams, $location) {
         }, 10);
     }
 
-   
+
 
 
 });
@@ -165,16 +165,16 @@ app.controller('ActorsController', function($http, $scope, $rootScope, $location
         }
 
     }
-     $scope.editActor = function(actor) {
-        $rootScope.flag=2;
-        $rootScope.aid=actor._id;
+    $scope.editActor = function(actor) {
+        $rootScope.flag = 2;
+        $rootScope.aid = actor._id;
 
         $rootScope.a = actor;
-        console.log ($rootScope.aid);
+        console.log($rootScope.aid);
         console.log($rootScope.a)
         $location.path('/addactor');
-        
-        }     
+
+    }
 
 });
 
@@ -206,15 +206,15 @@ app.controller('MoviesController', function($http, $scope, $rootScope, $location
         }
 
     }
-        $scope.editMovie = function(movie) {
-        $rootScope.flag=2;
-        $rootScope.mid=movie._id;
+    $scope.editMovie = function(movie) {
+        $rootScope.flag = 2;
+        $rootScope.mid = movie._id;
 
         $rootScope.m = movie;
-        console.log ($rootScope.mid);
+        console.log($rootScope.mid);
         console.log($rootScope.m)
         $location.path('/addmovie');
-        }
+    }
 
 });
 
@@ -222,7 +222,7 @@ app.controller('MoviesController', function($http, $scope, $rootScope, $location
 
 app.controller('ActorFormController', function($http, $scope, $location, $rootScope) {
 
-    
+
     $scope.submitForm = function() {
         var form = new FormData();
         form.append('photo', $scope.actor.photo);
@@ -249,18 +249,18 @@ app.controller('ActorFormController', function($http, $scope, $location, $rootSc
         })
     }
 
-    $scope.actor=$rootScope.a;
+    $scope.actor = $rootScope.a;
 
     $scope.submit = function() {
-        
-        console.log ($scope.actor);
+
+        console.log($scope.actor);
         var form = new FormData();
         form.append('photo', $scope.actor.photo);
         form.append('name', $scope.actor.name);
         form.append('dob', $scope.actor.dob);
         form.append('bio', $scope.actor.bio);
         $http({
-            url: 'api/actor/edit/'+$rootScope.aid,
+            url: 'api/actor/edit/' + $rootScope.aid,
             method: 'POST',
             data: form,
             headers: {
@@ -278,15 +278,15 @@ app.controller('ActorFormController', function($http, $scope, $location, $rootSc
             alert('Something went wrong 2here');
             console.log(response)
         });
-         $rootScope.flag=1;
+        $rootScope.flag = 1;
     }
-   
+
 
 
 });
 
 app.controller('ActorEditController', function($http, $scope, $location) {
-   
+
 });
 
 
@@ -412,11 +412,11 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
         })
     }
 
-      $scope.movie=$rootScope.m;
+    $scope.movie = $rootScope.m;
 
     $scope.submitmovie = function() {
-        
-        console.log ($scope.movie);
+
+        console.log($scope.movie);
         var form = new FormData();
         form.append('poster', $scope.movie.poster);
         form.append('title', $scope.movie.title);
@@ -428,7 +428,7 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
             form.append('actors', actor);
         })
         $http({
-            url: 'api/movie/edit/'+$rootScope.mid,
+            url: 'api/movie/edit/' + $rootScope.mid,
             method: 'POST',
             data: form,
             headers: {
@@ -446,9 +446,9 @@ app.controller('MovieFormController', function($http, $scope, $location, $rootSc
             alert('Something went wrong 2here');
             console.log(response)
         });
-         $rootScope.flag=1;
+        $rootScope.flag = 1;
     }
-   
+
 
 
 });
@@ -469,3 +469,22 @@ app.directive('fileModel', function($parse) {
         }
     };
 });
+// app.directive ("myDir", function () {
+//     return {
+//         restrict: 'A',
+//         template: "<span>mayank</span>",
+//         link : function (scope, element, attrs) {
+//             element.css({'font-size':'10px'});
+//             console.log ("link is called")
+
+//         },
+//         controller : function ($element) {
+//             console.log("controller is called ");
+//         },
+
+//         // compile : function (element) {
+//         //     console.log ("compile is called")
+//         //     element.css({'background':'pink'})
+//         // },
+//     }
+// } )
