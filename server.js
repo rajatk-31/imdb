@@ -1,5 +1,7 @@
 // This is example of server.js
 
+
+// Server file
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
